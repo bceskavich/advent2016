@@ -37,37 +37,33 @@ defmodule Advent.Two do
     read_row(tail, pos, code)
   end
 
-  def update_location("U", {x, y}) when y - 1 >= 0 do
+  def update_location("U", {x, y}) do
     case valid_key(x, y - 1) do
       true  -> {x, y - 1}
       false -> {x, y}
     end
   end
-  def update_location("U", {x, y}), do: {x, y}
-  def update_location("D", {x, y}) when y + 1 < 5 do
+  def update_location("D", {x, y}) do
     case valid_key(x, y + 1) do
       true  -> {x, y + 1}
       false -> {x, y}
     end
   end
-  def update_location("D", {x, y}), do: {x, y}
-  def update_location("L", {x, y}) when x - 1 >= 0 do
+  def update_location("L", {x, y}) do
     case valid_key(x - 1, y) do
       true  -> {x - 1, y}
       false -> {x, y}
     end
   end
-  def update_location("L", {x, y}), do: {x, y}
-  def update_location("R", {x, y}) when x + 1 < 5 do
+  def update_location("R", {x, y}) do
     case valid_key(x + 1, y) do
       true  -> {x + 1, y}
       false -> {x, y}
     end
   end
-  def update_location("R", {x, y}), do: {x, y}
   def update_location("", pos), do: pos
 
-  def valid_key(x, y) do
+  def valid_key(x, y) when (x >= 0 and x < 5 and y >= 0 and y < 5) do
     key = @numpad
     |> Enum.at(y)
     |> Enum.at(x)
@@ -77,4 +73,5 @@ defmodule Advent.Two do
       _   -> true
     end
   end
+  def valid_key(_, _), do: false
 end
